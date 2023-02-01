@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import useToggle from "./useToggle";
+import useFetch from "./useFetch";
 
-function App() {
+const App = () => {
+  const { value, toggle } = useToggle(true);
+  const fetchAPI = "http://hn.algolia.com/api/v1/search?query=hello+world";
+  const { fetchResponse, fetching } = useFetch(fetchAPI);
+  const results = fetchResponse;
+  let num = 1;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Toggling Button</h1>
+      <button onClick={toggle}>Toggle</button>
+      {value === true ? <p>The toggle is on</p> : <p>The toggle is off</p>}
+      <h1>Fetching Posts</h1>
+      <button onClick={fetching}>Fetch</button>
+      {results.length ? (
+        results.map((result) => (
+          <div key={result.objectID}>
+            {num++}. {result.title}
+          </div>
+        ))
+      ) : (
+        <div>Click Button to Fetch Results</div>
+      )}
     </div>
   );
-}
+};
 
 export default App;
