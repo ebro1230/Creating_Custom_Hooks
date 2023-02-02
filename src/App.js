@@ -6,7 +6,7 @@ import useWindowResize from "./useWindowResize";
 const App = () => {
   const { value, toggle } = useToggle(true);
   const fetchAPI = "http://hn.algolia.com/api/v1/search?query=hello+world";
-  const { fetchResponse, fetching } = useFetch(fetchAPI);
+  const { fetchResponse, isLoading, fetching } = useFetch(fetchAPI);
   const { width, height, findScreenSize } = useWindowResize();
   const results = fetchResponse;
   let num = 1;
@@ -25,7 +25,9 @@ const App = () => {
       {value === true ? <p>The toggle is on</p> : <p>The toggle is off</p>}
       <h1>Fetching Posts</h1>
       <button onClick={fetching}>Fetch</button>
-      {results.length ? (
+      {isLoading ? (
+        <div>Fetching Data...</div>
+      ) : results.length ? (
         results.map((result) => (
           <div key={result.objectID}>
             {num++}. {result.title}
