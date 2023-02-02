@@ -9,7 +9,7 @@ export default function useFetch(fetchAPI = "") {
     fetch(fetchAPI)
       .then((response) => {
         if (!response.ok) {
-          alert("Error 1");
+          alert(`HTTP Status Error: ${response.status}`);
         } else {
           return response;
         }
@@ -19,7 +19,7 @@ export default function useFetch(fetchAPI = "") {
         setFetchResponse(json.hits);
       })
       .catch((error) => {
-        alert(`Error 2: ${error}`);
+        alert(`${error}`);
       })
       .finally(() => {
         setIsLoading(false);
