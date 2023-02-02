@@ -4,7 +4,6 @@ export default function useFetch(fetchAPI = "") {
   const [fetchResponse, setFetchResponse] = useState([]);
 
   const fetching = () => {
-    console.log("fetching results");
     fetch(fetchAPI)
       .then((response) => {
         if (!response.ok) {
